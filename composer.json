@@ -1,0 +1,37 @@
+{
+    "name": "dotronglong/flarum-post-privacy",
+    "description": "Allow to control post's privacy",
+    "keywords": [
+        "extension",
+        "flarum",
+        "post",
+        "privacy"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Long Do",
+            "email": "me@dotronglong.com",
+            "homepage": "https://dotronglong.com/"
+        }
+    ],
+    "require": {
+        "flarum/core": "^0.1.0-beta.8"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Post Privacy",
+            "icon": {
+                "name": "far fa-address-book",
+                "backgroundColor": "#e74c3c",
+                "color": "#fff"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Long\\PostPrivacy\\": "src/"
+        }
+    }
+}
