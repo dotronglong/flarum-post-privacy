@@ -1,4 +1,4 @@
-ld-post-privacy:
+dotronglong-post-privacy:
     admin:
         permissions:
             see_author: See post's author

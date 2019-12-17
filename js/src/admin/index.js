@@ -4,24 +4,23 @@ import PermissionGrid from 'flarum/components/PermissionGrid';
 import SettingsModal from '@fof/components/admin/settings/SettingsModal';
 import BooleanItem from '@fof/components/admin/settings/items/BooleanItem';
 
-app.initializers.add('ld-post-privacy', app => {
-    extend(PermissionGrid.prototype, 'seeAuthor', items => {
-        items.add('ld-post-privacy', {
+app.initializers.add('dotronglong-post-privacy', () => {
+    extend(PermissionGrid.prototype, 'moderateItems', items => {
+        items.add('dotronglong-post-privacy', {
             icon: 'fas fa-shield-alt',
-            label: app.translator.trans('ld-post-privacy.admin.permissions.see_author'),
-            permission: 'ld.post-privacy.see_author',
-            allowGuest: false,
+            label: app.translator.trans('dotronglong-post-privacy.admin.permissions.see_author'),
+            permission: 'dotronglong-post-privacy.seeAuthor'
         });
     });
 
-    app.extensionSettings['ld-post-privacy'] = () =>
+    app.extensionSettings['dotronglong-post-privacy'] = () =>
         app.modal.show(
             new SettingsModal({
-                title: app.translator.trans('ld-post-privacy.admin.settings.title'),
+                title: app.translator.trans('dotronglong-post-privacy.admin.settings.title'),
                 size: 'medium',
                 items: [
-                    <BooleanItem key="ld-post-privacy-ghost-mode">
-                        {app.translator.trans('ld-post-privacy.admin.settings.ghost_mode')}
+                    <BooleanItem key="dotronglong-post-privacy-ghost-mode">
+                        {app.translator.trans('dotronglong-post-privacy.admin.settings.ghost_mode')}
                     </BooleanItem>,
                 ],
             })
