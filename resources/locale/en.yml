@@ -1,0 +1,7 @@
+ld-post-privacy:
+    admin:
+        permissions:
+            see_author: See post's author
+        settings:
+            title: Post Privacy Settings
+            ghost_mode: Enable Ghost Mode (Completely anonymous)

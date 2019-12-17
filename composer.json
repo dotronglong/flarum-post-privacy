@@ -23,7 +23,7 @@
         "flarum-extension": {
             "title": "Post Privacy",
             "icon": {
-                "name": "far fa-address-book",
+                "name": "fas fa-shield-alt",
                 "backgroundColor": "#e74c3c",
                 "color": "#fff"
             }
@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Long\\PostPrivacy\\": "src/"
+            "LD\\PostPrivacy\\": "src/"
         }
     }
 }
