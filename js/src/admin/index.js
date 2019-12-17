@@ -9,7 +9,7 @@ app.initializers.add('dotronglong-post-privacy', () => {
         items.add('dotronglong-post-privacy', {
             icon: 'fas fa-shield-alt',
             label: app.translator.trans('dotronglong-post-privacy.admin.permissions.see_author'),
-            permission: 'dotronglong-post-privacy.seeAuthor'
+            permission: 'dotronglong.post-privacy.seeAuthor'
         });
     });
 
