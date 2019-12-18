@@ -1,6 +1,6 @@
 import Button from 'flarum/components/Button';
 import Modal from 'flarum/components/Modal';
-import Switch from 'flarum/components/Switch';
+import Checkbox from 'flarum/components/Checkbox';
 
 export default class PostPrivacyModal extends Modal {
     init() {
@@ -22,9 +22,21 @@ export default class PostPrivacyModal extends Modal {
             <div className="Modal-body">
                 <div className="PostPrivacyDiscussionModal-form">
                     <div className="Form-group">
-                        <label className="label">{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_label')}</label>
-
-                        <input type="text" name="question" className="FormControl" bidi={this.question} />
+                        <label>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_label')}</label>
+                        <ul>
+                            <li className="item-nav">
+                                <Checkbox state={true}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_label')}</strong></Checkbox>
+                                <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_info')}</small>
+                            </li>
+                            <li className="item-nav">
+                                <Checkbox><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_label')}</strong></Checkbox>
+                                <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_info')}</small>
+                            </li>
+                            <li className="item-nav">
+                                <Checkbox><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_label')}</strong></Checkbox>
+                                <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_info')}</small>
+                            </li>
+                        </ul>
                     </div>
 
                     <div className="Form-group">
@@ -54,11 +66,11 @@ export default class PostPrivacyModal extends Modal {
                 </fieldset>
                 {i >= 2
                     ? Button.component({
-                          type: 'button',
-                          className: 'Button Button--warning PollModal--button',
-                          icon: 'fas fa-minus',
-                          onclick: i >= 2 ? this.removeOption.bind(this, i) : '',
-                      })
+                        type: 'button',
+                        className: 'Button Button--warning PollModal--button',
+                        icon: 'fas fa-minus',
+                        onclick: i >= 2 ? this.removeOption.bind(this, i) : '',
+                    })
                     : ''}
             </div>
         ));
@@ -101,7 +113,7 @@ export default class PostPrivacyModal extends Modal {
             return;
         }
 
-        poll.relationships = { options };
+        poll.relationships = {options};
 
         this.props.onsubmit(poll);
 
