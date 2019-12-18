@@ -5,6 +5,7 @@ import ComposerButton from 'flarum/components/ComposerButton';
 import PostPrivacyModal from './components/PostPrivacyModal';
 
 export default () => {
+
     Composer.prototype.changePrivacy = function() {
         app.modal.show(
             new PostPrivacyModal({
@@ -24,6 +25,7 @@ export default () => {
     });
 
     extend(Composer.prototype, 'data', function(data) {
+        console.log(data, this.privacy);
         if (this.privacy) {
             data.privacy = this.privacy;
         }

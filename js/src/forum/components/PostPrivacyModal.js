@@ -5,8 +5,7 @@ import Checkbox from 'flarum/components/Checkbox';
 export default class PostPrivacyModal extends Modal {
     init() {
         super.init();
-
-        this.privacy = m.prop(false);
+        this.privacy = this.privacy || 2;
     }
 
     title() {
@@ -18,24 +17,34 @@ export default class PostPrivacyModal extends Modal {
     }
 
     content() {
+        const isPublic = this.privacy === 2;
+        const isAnonymous = this.privacy === 1;
+        const isGhost = this.privacy === 0;
+        const items = [
+            <li className="item-nav">
+                <Checkbox state={isPublic} onchange={() => this.privacy=2}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_label')}</strong></Checkbox>
+                <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_info')}</small>
+            </li>,
+            <li className="item-nav">
+                <Checkbox state={isAnonymous} onchange={() => this.privacy=1}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_label')}</strong></Checkbox>
+                <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_info')}</small>
+            </li>
+        ];
+        if (app.forum.data.attributes.enableGhostMode === true) {
+            items.push(
+                <li className="item-nav">
+                    <Checkbox state={isGhost} onchange={() => this.privacy=0}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_label')}</strong></Checkbox>
+                    <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_info')}</small>
+                </li>
+            );
+        }
         return [
             <div className="Modal-body">
                 <div className="PostPrivacyDiscussionModal-form">
                     <div className="Form-group">
                         <label>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_label')}</label>
                         <ul>
-                            <li className="item-nav">
-                                <Checkbox state={true}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_label')}</strong></Checkbox>
-                                <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_info')}</small>
-                            </li>
-                            <li className="item-nav">
-                                <Checkbox><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_label')}</strong></Checkbox>
-                                <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_info')}</small>
-                            </li>
-                            <li className="item-nav">
-                                <Checkbox><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_label')}</strong></Checkbox>
-                                <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_info')}</small>
-                            </li>
+                            {items}
                         </ul>
                     </div>
 
@@ -52,71 +61,9 @@ export default class PostPrivacyModal extends Modal {
         ];
     }
 
-    displayOptions() {
-        return Object.keys(this.options).map((el, i) => (
-            <div className={this.options[i + 1] === '' ? 'Form-group hide' : 'Form-group'}>
-                <fieldset className="Poll-answer-input">
-                    <input
-                        className="FormControl"
-                        type="text"
-                        name={'answer' + (i + 1)}
-                        bidi={this.options[i]}
-                        placeholder={app.translator.trans('fof-polls.forum.modal.option_placeholder') + ' #' + (i + 1)}
-                    />
-                </fieldset>
-                {i >= 2
-                    ? Button.component({
-                        type: 'button',
-                        className: 'Button Button--warning PollModal--button',
-                        icon: 'fas fa-minus',
-                        onclick: i >= 2 ? this.removeOption.bind(this, i) : '',
-                    })
-                    : ''}
-            </div>
-        ));
-    }
-
-    addOption() {
-        const setting = app.data['fof-polls.options.max'];
-        const max = (setting && parseInt(setting)) || 11;
-
-        if (this.options.length < max) {
-            this.options.push(m.prop(''));
-        } else {
-            alert(app.translator.trans('fof-polls.forum.modal.max'));
-        }
-    }
-
-    removeOption(option) {
-        this.options.splice(option, 1);
-    }
-
     onsubmit(e) {
         e.preventDefault();
-
-        const poll = {
-            question: this.question(),
-            endDate: this.endDate(),
-            publicPoll: this.publicPoll(),
-        };
-        const options = this.options.map(a => a()).filter(Boolean);
-
-        if (this.question() === '') {
-            alert(app.translator.trans('fof-polls.forum.modal.include_question'));
-
-            return;
-        }
-
-        if (options.length < 2) {
-            alert(app.translator.trans('fof-polls.forum.modal.min'));
-
-            return;
-        }
-
-        poll.relationships = {options};
-
-        this.props.onsubmit(poll);
-
+        this.props.onsubmit(this.privacy);
         app.modal.close();
     }
 }

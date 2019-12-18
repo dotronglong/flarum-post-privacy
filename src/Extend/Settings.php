@@ -24,8 +24,8 @@ class Settings implements ExtenderInterface
              */
             $settings = app(SettingsRepositoryInterface::class);
 
-            $event->attributes['canSeeAuthor'] = $event->actor->can('ld.post-privacy.see_author');
-            $event->attributes['enableGhostMode'] = $settings->get('ld-post-privacy-ghost-mode');
+            $event->attributes['canSeeAuthor'] = $event->actor->can('dotronglong.post-privacy.seeAuthor');
+            $event->attributes['enableGhostMode'] = boolval($settings->get('dotronglong-post-privacy-ghost-mode'));
         }
     }
 }
