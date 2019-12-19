@@ -3,7 +3,8 @@
 namespace LD\PostPrivacy;
 
 use Flarum\Extend;
-use Flarum\Discussion\Event\Saving;
+use Flarum\Post\Event\Saving as PostSaving;
+use Flarum\Discussion\Event\Saving as DiscussionSaving;
 use Illuminate\Contracts\Events\Dispatcher;
 
 return [
@@ -15,6 +16,7 @@ return [
     new Extend\Locales(__DIR__ . '/locale'),
     new \LD\PostPrivacy\Extend\Settings(),
     function (Dispatcher $events) {
-        $events->listen(Saving::class, Listener\ProcessPostPrivacy::class);
+        $events->listen(PostSaving::class, Listener\ProcessPostPrivacy::class);
+        $events->listen(DiscussionSaving::class, Listener\ProcessDiscussionPrivacy::class);
     }
 ];
