@@ -5,7 +5,7 @@ import Checkbox from 'flarum/components/Checkbox';
 export default class PostPrivacyModal extends Modal {
     init() {
         super.init();
-        this.privacy = this.privacy || 2;
+        this.privacy = this.props.privacy;
     }
 
     title() {
@@ -17,23 +17,23 @@ export default class PostPrivacyModal extends Modal {
     }
 
     content() {
-        const isPublic = this.privacy === 2;
-        const isAnonymous = this.privacy === 1;
-        const isGhost = this.privacy === 0;
+        const isPublic = this.privacy === 1;
+        const isAnonymous = this.privacy === 2;
+        const isGhost = this.privacy === 3;
         const items = [
             <li className="item-nav">
-                <Checkbox state={isPublic} onchange={() => this.privacy=2}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_label')}</strong></Checkbox>
+                <Checkbox state={isPublic} onchange={() => this.privacy=1}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_label')}</strong></Checkbox>
                 <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_public_info')}</small>
             </li>,
             <li className="item-nav">
-                <Checkbox state={isAnonymous} onchange={() => this.privacy=1}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_label')}</strong></Checkbox>
+                <Checkbox state={isAnonymous} onchange={() => this.privacy=2}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_label')}</strong></Checkbox>
                 <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_anonymous_info')}</small>
             </li>
         ];
         if (app.forum.data.attributes.enableGhostMode === true) {
             items.push(
                 <li className="item-nav">
-                    <Checkbox state={isGhost} onchange={() => this.privacy=0}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_label')}</strong></Checkbox>
+                    <Checkbox state={isGhost} onchange={() => this.privacy=3}><strong>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_label')}</strong></Checkbox>
                     <small>{app.translator.trans('dotronglong-post-privacy.forum.modal.privacy_ghost_info')}</small>
                 </li>
             );
